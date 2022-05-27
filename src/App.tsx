@@ -1,38 +1,32 @@
-import * as React from "react"
 import {
   ChakraProvider,
-  Box,
+  Container,
+  Flex,
+  Heading,
   Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
   theme,
-} from "@chakra-ui/react"
-import { ColorModeSwitcher } from "./ColorModeSwitcher"
-import { Logo } from "./Logo"
+} from "@chakra-ui/react";
+import { Provider } from "react-redux";
+import Navigation from "./components/Navigation";
+import VendingMachine from "./components/VendingMachine";
+import store from "./utils/store";
 
 export const App = () => (
-  <ChakraProvider theme={theme}>
-    <Box textAlign="center" fontSize="xl">
-      <Grid minH="100vh" p={3}>
-        <ColorModeSwitcher justifySelf="flex-end" />
-        <VStack spacing={8}>
-          <Logo h="40vmin" pointerEvents="none" />
-          <Text>
-            Edit <Code fontSize="xl">src/App.tsx</Code> and save to reload.
-          </Text>
-          <Link
-            color="teal.500"
-            href="https://chakra-ui.com"
-            fontSize="2xl"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn Chakra
-          </Link>
-        </VStack>
-      </Grid>
-    </Box>
-  </ChakraProvider>
-)
+  <Provider store={store}>
+    <ChakraProvider theme={theme}>
+      <Container maxW={"container.lg"} py={5}>
+        <Heading>Snack Vending Machine</Heading>
+        <Text color={"grey"}>By Jeries Nasrawi</Text>
+        <Navigation />
+        <Flex
+          alignItems={"center"}
+          justifyContent="center"
+          py={5}
+          flexDir="column"
+        >
+          <VendingMachine />
+        </Flex>
+      </Container>
+    </ChakraProvider>
+  </Provider>
+);
