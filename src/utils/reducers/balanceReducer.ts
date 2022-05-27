@@ -1,4 +1,5 @@
 import { BalanceActionTypes } from "../actions/balanceActionTypes";
+import { addToBalance } from "../helpers/balanceHelpers";
 
 const initialState = {
   value: "0.00",
@@ -13,7 +14,7 @@ const balanceReducer = (
     case BalanceActionTypes.ADD_FUNDS:
       return {
         ...state,
-        value: (Number(state.value) + Number(payload)).toFixed(2),
+        value: addToBalance(Number(state.value), Number(payload)),
       };
     case BalanceActionTypes.RESET_FUNDS:
       return initialState;

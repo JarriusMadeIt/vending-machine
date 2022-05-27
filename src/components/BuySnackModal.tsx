@@ -16,6 +16,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { resetFunds } from "../utils/actions/balanceActions";
 import { buySnack } from "../utils/actions/snackActions";
+import { calculateChange } from "../utils/helpers/balanceHelpers";
 import { RootState } from "../utils/reducers";
 
 const BuySnackModal = ({
@@ -91,9 +92,10 @@ const BuySnackModal = ({
   //buy item handler
   const onBuySnackHandler = () => {
     //get change
-    const change = (
-      Number(balanceValue) - Number(selectedSnack.price.value)
-    ).toFixed(2);
+    const change = calculateChange(
+      Number(balanceValue),
+      Number(selectedSnack.price.value)
+    );
 
     //update states
     dispatch(buySnack(selectedSnack.id));
@@ -138,9 +140,10 @@ const BuySnackModal = ({
               >{`${selectedSnack?.price.currency.symbol}${selectedSnack?.price.value} ${selectedSnack?.price.currency.cc}`}</Text>
               <Text fontSize={"xl"} color="grey">{`Change: ${
                 selectedSnack?.price.currency.symbol
-              }${(
-                Number(balanceValue) - Number(selectedSnack?.price.value)
-              ).toFixed(2)} ${selectedSnack?.price.currency.cc}`}</Text>
+              }${calculateChange(
+                Number(balanceValue),
+                Number(selectedSnack?.price.value)
+              )} ${selectedSnack?.price.currency.cc}`}</Text>
             </VStack>
           </ModalBody>
           <ModalFooter>
